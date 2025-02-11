@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Bounty Recon Tool</title>
+    <script>
+        async function runTool(tool) {
+            let domain = document.getElementById("domain").value;
+            let output = document.getElementById("output");
+
+            if (!domain) {
+                output.innerText = "Enter a valid domain!";
+                return;
+            }
+
+            try {
+                let response = await fetch(`/recon/${tool}/?domain=${domain}`);
+                let data = await response.json();
+
+                if (data.error) {
+                    output.innerText = "Error: " + data.error;
+                } else {
+                    output.innerText = JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                output.innerText = "Server error!";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Bug Bounty Recon Tool</h2>
+    
+    <label for="domain">Enter Target Domain:</label>
+    <input type="text" id="domain" placeholder="example.com">
+    
+    <br><br>
+
+    <button onclick="runTool('katana')">Run Katana (Crawl)</button>
+    <button onclick="runTool('subfinder')">Run Subfinder (Subdomains)</button>
+    <button onclick="runTool('gau')">Run GAU (GetAllUrls)</button>
+    <button onclick="runTool('sqlmap')">Run SQLMap (SQLi Test)</button>
+
+    <br><br>
+
+    <pre id="output"></pre>
+
+</body>
+</html>

@@ -16,9 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from scanner import views
+from django.urls import path
+from recon.views import run_katana, run_subfinder, run_gau, run_sqlmap
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.home_page)
+    path('recon/', views),  #include recon tools 
+    path("katana/", run_katana, name="run_katana"),
+    path("subfinder/", run_subfinder, name="run_subfinder"),
+    path("gau/", run_gau, name="run_gau"),
+    path("sqlmap/", run_sqlmap, name="run_sqlmap"),
 ]
