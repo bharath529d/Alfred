@@ -10,7 +10,8 @@ let host_ip = "127.0.0.1:8000"
 window.onload = function(){   // when the page is loaded then we create tabs map for storing tabs
     Tabs_ = new Tabs()
     disable_change_ip_btn()
-    set_info("505")
+    set_info("506")
+    set_info("507")
 }
 
 function start_spinner(){
@@ -98,7 +99,7 @@ function create_new_tab(domain,ipv4,ipv6){
     }
     Tabs_.add_tab(new Tab(domain,ipv4,ipv6))
     let new_tab = document.createElement("div")// new tab as div
-    new_tab.classList.add("new_tab","tab","d-flex","justify-content-between","align-items-center","pt-3","pb-3","ps-3")
+    new_tab.classList.add("new_tab","rounded-pill","tab","d-flex","justify-content-between","align-items-center","pt-3","pb-3","ps-3")
     selected_tab = new_tab
     new_tab.addEventListener("click",set_tab_data)  
     let tab_name = document.createTextNode(domain)  // text inside the div as domain

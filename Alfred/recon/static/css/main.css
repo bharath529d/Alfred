@@ -8,9 +8,23 @@
     cursor: pointer;
 }
 .normal-tab{
-    background-color: rgb(83, 164, 235);
+    border: 3px solid white;
+    margin: 2px 0px;
+    margin-right: 3px;
+    background-color: rgb(25 135 84);
 }
 .selected-tab{
+    border: 3px solid white;
+    margin: 2px 0px;
+    margin-right: 3px;
+    color: rgb(25 135 84);
+    background-color: white;
+}
+.selected-tab:hover{
+    border: 3px solid white;
+    margin: 2px 0px;
+    margin-right: 3px;
+    color: rgb(25 135 84);
     background-color: white;
 }
 .bgc{
