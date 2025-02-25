@@ -1,0 +1,8 @@
+WorkFlow:
+1)target input domain
+2)ping the domain
+3)display ip using ping
+4)waplyzer - tech stack (tool)
+5)display tech stack
+6)pipe the tech stack to retire.js (CVE tool)
+7)display CVE

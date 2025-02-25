@@ -1,0 +1,76 @@
+.subdomain{
+    background-color:  rgb(148, 195, 237);
+    color: white;
+}
+.subdomain:hover{
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+.normal-tab{
+    background-color: rgb(83, 164, 235);
+}
+.selected-tab{
+    background-color: white;
+}
+.bgc{
+    background-color: rgb(23, 23, 24);
+}
+.textc{
+    color: rgb(242, 239, 239);
+}
+
+.tab{
+    cursor: pointer;
+    box-shadow: inset 0 0 3px hsl(0, 4%, 62%);
+}
+.tab:hover{
+    background-color: aliceblue;
+}
+
+.tab:active{
+    background-color: rgb(142, 183, 220);
+}
+
+.delete_tab:hover{
+    padding: 2%;
+    background-color: rgb(142, 183, 220);
+}
+
+.delete_tab:active{
+    padding: 2%;
+    background-color: rgb(226, 13, 52);
+}
+
+.new_tab{
+    flex: 0 0 auto;
+    /* Style for the div element */
+}
+
+.c-rounded{
+    border-radius: 1rem;
+}
+
+.btns:hover{
+    background-color: rgb(72, 158, 72);
+}
+
+.btns-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* realted to sections and mycontianer */
+.mycontainer{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.sections{
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
