@@ -11,7 +11,7 @@ window.onload = function(){   // when the page is loaded then we create tabs map
     Tabs_ = new Tabs()
     disable_change_ip_btn()
     set_info("506")
-    set_info("507")
+    set_info("509")
 }
 
 function start_spinner(){
@@ -89,7 +89,7 @@ function create_new_tab(domain,ipv4,ipv6){
     let add_tab_button;
     if(!Tabs_.get_size()){  
         add_tab_button = document.createElement("div")
-        add_tab_button.classList.add("plus-tab","p-2")
+        add_tab_button.classList.add("c-rounded","p-2")
         add_tab_button.id = "add_tab_btn"
         add_tab_button.innerHTML = `<div><span class="fa fa-plus"></span></div>`
         add_tab_button.addEventListener("click",function (){
