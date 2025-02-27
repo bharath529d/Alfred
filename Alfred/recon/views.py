@@ -6,6 +6,7 @@ import icmplib
 import os
 import subprocess
 from .execute_tools import store_subdomains
+from .models import Subdomains
 # Create your views here.
 
 
@@ -92,15 +93,11 @@ def get_resolved_ip(request):
         return JsonResponse({"err_mes":"Domain doesn't exists","success":False})
     
 def get_subdomains(request):
-    # domain = request.GET.get('domain')
-    # subdomain_file_name = domain.replace(".","") + "sd.txt"
-    # store_subdomains(domain, subdomain_file_name )
-    subdomain_file_name = "googlecomsd.txt"
-    with open(fr'C:\Users\bhara\Downloads\RSUME\Python works\Alfred\Alfred\recon\tools_output\{subdomain_file_name}','r') as fp:
-        subdomains = fp.read().splitlines()
-    return JsonResponse({"subdomains":subdomains,"message": "Subdomains Fetched Succesfully.."})
+    domain = request.GET.get('domain')
+    # with open(fr'C:\Users\bhara\Downloads\RSUME\Python works\Alfred\Alfred\recon\tools_output\{subdomain_file_name}','r') as fp:
+    #     subdomains = fp.read().splitlines()
+    # return JsonResponse({"subdomains":subdomains,"message": "Subdomains Fetched Succesfully.."})
 
-        
-
+    
 
 
