@@ -1,9 +1,9 @@
 cd.rkmvc.ac.in
-vclib.rkmvc.ac.in
+vclib.rkmvc.ac.in.akdjga.lskdj
 alumni.rkmvc.ac.in
 erp.rkmvc.ac.in
 cms.rkmvc.ac.in
-secure.rkmvc.ac.in
+secure.rkmvc.ac.in.akglkdjgkjagjk
 test.rkmvc.ac.in
 test1.rkmvc.ac.in
 local.rkmvc.ac.in

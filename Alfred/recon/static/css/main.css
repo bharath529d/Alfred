@@ -1,6 +1,7 @@
 .subdomain{
-    background-color:  rgb(148, 195, 237);
+    background-color:  rgb(23 23 24);
     color: white;
+    cursor: pointer;
 }
 .subdomain:hover{
     background-color: white;
@@ -96,6 +97,16 @@
     display: flex;
     flex: 1;
     overflow: hidden;
+}
+
+.section{
+    flex: 1;
+    overflow: auto;
+    margin-right: 3px;
+}
+
+.section-margin{
+    margin-right: 3px;
 }
 
 .use-scrollbar{
