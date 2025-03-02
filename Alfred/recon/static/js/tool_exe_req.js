@@ -7,13 +7,21 @@ async function get_subdomains(){
         const url = new URL(`http://${host_ip}/getsubdomains/`)
         url.searchParams.append("domain",domain)
         set_info("FETCHING SUBDOMAINS  ")
-        
         const response = await fetch(url)
         const fetched_data = await response.json()
-        console.log(fetched_data)
         stop()
+        console.log(fetched_data.subdomains)
+        console.log(typeof fetched_data.subdomains)
+        subdomains = JSON.parse(fetched_data.subdomains)
+        console.log(subdomains)
+        console.log(typeof subdomains)
         set_info(fetched_data.message)
-        set_subdomain_data(fetched_data.subdomains)
+        if(subdomains){
+            set_subdomain_data(subdomains)
+        }else{
+            set_subdomain_data(["dummy","dummy"])
+        }
+            
     }catch(error){
         stop()
         set_info("Storing Subdomain Failed!")

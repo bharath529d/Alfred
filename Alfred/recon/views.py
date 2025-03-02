@@ -94,9 +94,13 @@ def get_resolved_ip(request):
     
 def get_subdomains(request):
     domain = request.GET.get('domain')
-    # with open(fr'C:\Users\bhara\Downloads\RSUME\Python works\Alfred\Alfred\recon\tools_output\{subdomain_file_name}','r') as fp:
-    #     subdomains = fp.read().splitlines()
-    # return JsonResponse({"subdomains":subdomains,"message": "Subdomains Fetched Succesfully.."})
+    result = Subdomains.objects.filter(domain_name=f"{domain}")
+    if len(result):
+        subdomains =  result[0].subdomains
+    else:
+        subdomains = store_subdomains(domain)
+        print(subdomains, type(subdomains))
+    return JsonResponse({"subdomains":subdomains,"message": "Subdomains Fetched Succesfully.."})
 
     
 

@@ -6,9 +6,12 @@ class Subdomains(models.Model):
     subdomains = models.TextField()
 
     def save_subdomains(self,subdomains):
-        self.subdomains = json.dumps(subdomains) 
+        in_json_format = json.dumps(subdomains) 
+        self.subdomains = in_json_format
         self.save()
+        return in_json_format
+        
     
-    def get_subdomains(self, subdomains):
-        return json.loads(self.subdomains)
+    def get_subdomains(self,domain):
+        return self.subdomains
     

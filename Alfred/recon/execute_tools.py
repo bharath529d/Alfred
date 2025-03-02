@@ -1,32 +1,22 @@
-import subprocess
-import os 
+import os, json, subprocess
+from .models import Subdomains
 
-def store_subdomains(domain, subdomain_file_name):
+def store_subdomains(domain):
     os.chdir(r'C:\Users\bhara\Downloads\RSUME\Python works\Alfred\Alfred\recon\tools')
-    subprocess.call(['subfinder','-d',domain,'-o',fr'C:\Users\bhara\Downloads\RSUME\Python works\Alfred\Alfred\recon\tools_output\{subdomain_file_name}'])
-    print("Got subdomains")
+    command = f"subfinder -d {domain}"
+    result = subprocess.run(command,shell=True,capture_output=True,text=True)
+    subdomains = []
+    subdomain = []
+    for ch in result.stdout:  # converting the output of the command into a list of subdomains
+        if ch != "\n": 
+            subdomain.append(ch)
+        else:
+            subdomains.append(''.join(subdomain))
+            subdomain = []
+    new_domain = Subdomains() # creating a new record of Subdomains
+    new_domain.domain_name = domain  # setting the domain_name to the domain for which subdomains were requested
+    return new_domain.save_subdomains(subdomains) # stores the subdomains in json format and
+    # returns the json formatted string of subdomains
+    
 
-# import subprocess
-# import tempfile
-# import json
-# import os
 
-# # Create a temporary file
-# with tempfile.NamedTemporaryFile(mode='w+', delete=False) as temp_file:
-#     temp_filename = temp_file.name
-
-#     # Run Subfinder command and direct output to temporary file
-#     subprocess.run(
-#         ['subfinder', '-d', 'rkmvc.ac.in', '-oJ', temp_filename]
-#     )
-
-# # Read the output from the temporary file
-# with open(temp_filename, 'r') as file:
-#     data = json.load(file)
-
-# # Process the data
-# for subdomain in data:
-#     print(subdomain)
-
-# # Delete the temporary file
-# os.remove(temp_filename)
