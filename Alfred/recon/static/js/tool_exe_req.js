@@ -51,7 +51,7 @@ function set_subdomain_data(subdomains, reachable){
         checkbox.id = `${index}`
         checkbox.name = "selected_subdomains"
         checkbox.value = subdomain
-        checkbox.classList.add("select_subdomains_cb")
+        checkbox.classList.add("sd-cb")
         new_sd.appendChild(checkbox)
         new_sd.appendChild(new_a)
         subdomain_area.appendChild(new_sd)
@@ -74,4 +74,9 @@ function set_subdomain_data(subdomains, reachable){
     // }else{
     //     set_info("no_overflow")
     // }
+}
+
+function request_tech_stack(){
+    checkboxes = document.getElementsByClassName("sd-cb")
+    console.log(checkboxes)
 }

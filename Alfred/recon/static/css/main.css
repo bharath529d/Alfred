@@ -136,22 +136,22 @@
     font:  0.8rem;
 }
 
-.select_subdomains_cb{
+.sd-cb{  /* subdomains checkbox */
     transform: scale(1.5);
     margin-right: 10px;
 }
 
-.select_subdomains_cb:checked{
+.sd-cb:checked{ /* subdomains checkbox when checked*/
     background-color: white;
     color: green;
 }
 
 .reachable{
-    color: rgb(49, 239, 49);
+    color:  rgb(25 135 84);
     font-weight: bold;
 }
 
 .not-reachable{
-    color: red;
+    color: rgb(171, 31, 31);
     font-weight: bold;
 }

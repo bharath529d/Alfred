@@ -109,6 +109,10 @@ def get_subdomains(request):
         print(subdomains, type(subdomains))
     return JsonResponse({"subdomains":subdomains,"reachable":reachable,"message": "Subdomains Fetched Succesfully.."})
 
-    
+def get_tech_stack(request):
+    if request.method == "POST":
+        subdomains = json.loads(request.body)
+        print(subdomains, type(subdomains))
+
 
 
