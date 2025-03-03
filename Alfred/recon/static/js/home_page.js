@@ -11,7 +11,7 @@ window.onload = function(){   // when the page is loaded then we create tabs map
     Tabs_ = new Tabs()
     disable_change_ip_btn()
     set_info("506")
-    set_info("500")
+    set_info("511")
 }
 
 function start_spinner(){

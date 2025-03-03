@@ -12,6 +12,3 @@ class Subdomains(models.Model):
         return in_json_format
         
     
-    def get_subdomains(self,domain):
-        return self.subdomains
-    

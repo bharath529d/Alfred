@@ -10,14 +10,20 @@ async function get_subdomains(){
         const response = await fetch(url)
         const fetched_data = await response.json()
         stop()
-        console.log(fetched_data.subdomains)
-        console.log(typeof fetched_data.subdomains)
-        subdomains = JSON.parse(fetched_data.subdomains)
+        let subdomains
+        if(Array.isArray(fetched_data.subdomains)){
+            subdomains = fetched_data.subdomains
+            
+        }else{
+            subdomains = JSON.parse(fetched_data.subdomains)
+        }
         console.log(subdomains)
         console.log(typeof subdomains)
+        console.log(fetched_data.reachable)
+        reachable = fetched_data.reachable
         set_info(fetched_data.message)
         if(subdomains){
-            set_subdomain_data(subdomains)
+            set_subdomain_data(subdomains,reachable)
         }else{
             set_subdomain_data(["dummy","dummy"])
         }
@@ -29,10 +35,10 @@ async function get_subdomains(){
     }
 }
 
-function set_subdomain_data(subdomains){
+function set_subdomain_data(subdomains, reachable){
     subdomain_area = document.getElementById('section-1')
     subdomain_area.innerHTML = ""
-    for (let subdomain of subdomains){
+    for (let [index,subdomain] of subdomains.entries()){
         new_sd = document.createElement("div")
         new_a = document.createElement("a")
         new_sd.classList.add("subdomain","p-2")
@@ -40,8 +46,20 @@ function set_subdomain_data(subdomains){
         new_a.target = "_blank"
         sd_text = document.createTextNode(subdomain)
         new_a.appendChild(sd_text)
+        checkbox = document.createElement("input")
+        checkbox.type = "checkbox"
+        checkbox.id = `${index}`
+        checkbox.name = "selected_subdomains"
+        checkbox.value = subdomain
+        checkbox.classList.add("select_subdomains_cb")
+        new_sd.appendChild(checkbox)
         new_sd.appendChild(new_a)
         subdomain_area.appendChild(new_sd)
+        if(reachable[index]){
+            new_a.classList.add("reachable")
+        }else{
+            new_a.classList.add("not-reachable")
+        }
     }
     // oc = document.getElementById("section-1")
     // subdomain_ele_width = oc.scrollWidth

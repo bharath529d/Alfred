@@ -120,3 +120,38 @@
 #tabs_area::-webkit-scrollbar-thumb{
     color: rgb(25 135 84);
 }
+
+.tool-tab{
+    width: 20%;
+    height: 150%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3%;
+}
+
+.tool-tab:hover{
+    background-color: white;
+    color: black;
+    font:  0.8rem;
+}
+
+.select_subdomains_cb{
+    transform: scale(1.5);
+    margin-right: 10px;
+}
+
+.select_subdomains_cb:checked{
+    background-color: white;
+    color: green;
+}
+
+.reachable{
+    color: rgb(49, 239, 49);
+    font-weight: bold;
+}
+
+.not-reachable{
+    color: red;
+    font-weight: bold;
+}
