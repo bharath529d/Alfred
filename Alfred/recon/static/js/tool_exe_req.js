@@ -104,15 +104,17 @@ async function request_tech_stack(){
 }
 
 function set_tech_stack(tech_stack){
-    content = ``
+    content = `<div class="mx-3" style="font-size: 20px;">`
     for (let subdomain_obj of tech_stack){
         for (let [subdomain,techs] of Object.entries(subdomain_obj)){
-            content +=`<br><strong><span style="font-size: 1.5rem;">----- ${subdomain}-----</span></strong><br>`
+            content +=`<strong><span style="font-size: 1.5rem;color: rgb(25 135 84);" >${subdomain}</span></strong><br>`
             for (let [categroup,tech] of Object.entries(techs)){
-                content += categroup + " => " + tech + "<br>"
+                content += `<span style="font-weight:bold"> ${categroup} => ${tech} </span><br>`
             }
-            content +="<br><br><br>"
+            content +="<hr>"
         }
     }
-    document.getElementById("section-2").innerHTML = content
+    content += `</div>`
+    section_2 = document.getElementById("section-2")
+    section_2.innerHTML = content
 }

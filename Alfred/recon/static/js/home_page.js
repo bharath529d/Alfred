@@ -10,6 +10,7 @@ let host_ip = "127.0.0.1:8000"
 window.onload = function(){   // when the page is loaded then we create tabs map for storing tabs
     Tabs_ = new Tabs()
     disable_change_ip_btn()
+    set_info("5")
 }
 
 function start_spinner(){
