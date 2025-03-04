@@ -96,18 +96,20 @@ def get_resolved_ip(request):
 def get_subdomains(request):
     domain = request.GET.get('domain')
     result = Subdomains.objects.filter(domain_name=f"{domain}")
+    reachable = []
+    subdomains = []
     if len(result):
         subdomains =  json.loads(result[0].subdomains)
-        reachable = []
-        for subdomain in subdomains:
-            try:
-                result = icmplib.ping(subdomain,count=1,interval=0,timeout=2)
-                reachable.append(True) if result.is_alive else reachable.append(False)
-            except:
-                reachable.append(False)
     else:
-        subdomains = execute_tools.store_subdomains(domain)
-        print(subdomains, type(subdomains))
+        subdomains = json.loads(execute_tools.store_subdomains(domain))
+    
+    for subdomain in subdomains:
+        try:
+            result = icmplib.ping(subdomain,count=1,interval=0,timeout=2)
+            reachable.append(True) if result.is_alive else reachable.append(False)
+        except:
+            reachable.append(False)
+            
     return JsonResponse({"subdomains":subdomains,"reachable":reachable,"message": "Subdomains Fetched Succesfully.."})
 
 @csrf_exempt
