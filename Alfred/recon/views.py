@@ -105,7 +105,7 @@ def get_subdomains(request):
     
     for subdomain in subdomains:
         try:
-            result = icmplib.ping(subdomain,count=1,interval=0,timeout=2)
+            result = icmplib.ping(subdomain,count=2,interval=0,timeout=2)
             reachable.append(True) if result.is_alive else reachable.append(False)
         except:
             reachable.append(False)
@@ -119,4 +119,15 @@ def get_tech_stack(request):
         tech_stack = execute_tools.tech_stack_list(subdomains)
         print(tech_stack, type(tech_stack))
     return JsonResponse({"tech_stack": tech_stack})
+
+@csrf_exempt
+def get_crawling_results(request):
+    if request.method == "POST":
+        subdomains = json.loads(request.body)
+        c_result = execute_tools.crawling_results(subdomains)
+        print()
+        print({"crawling_results":c_result})
+        return JsonResponse({"crawling_results":c_result}) # {"cr":[]}
+
+
 

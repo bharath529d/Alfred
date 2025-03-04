@@ -24,3 +24,20 @@ def tech_stack_list(subdomains):
         result = builtwith.parse(f"https://{subdomain}")
         tech_stack.append({subdomain:result})
     return tech_stack
+
+def crawling_results(subdomains):
+    os.chdir(r'C:\Users\bhara\Downloads\RSUME\Python works\Alfred\Alfred\recon\tools')
+    c_result = []
+    for subdomain in subdomains:
+        command = f"katana -u https://{subdomain}"
+        result = subprocess.run(command,shell=True,capture_output=True,text=True)
+        urls = []
+        url = []
+        for ch in result.stdout:  # converting the output of the command into a list of subdomains
+            if ch != "\n": 
+                url.append(ch)
+            else:
+                urls.append(''.join(url))
+                url = []
+        c_result.append({subdomain:urls})
+    return c_result  # [{aims:[url1,url2]},{alumni:[ul]}]

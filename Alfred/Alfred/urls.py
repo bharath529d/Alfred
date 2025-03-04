@@ -30,5 +30,6 @@ urlpatterns = [
     path('getip/',views.get_resolved_ip),
     path('getsubdomains/',views.get_subdomains),
     path('dummy/',views.dummy_page),
-    path('tech_stack/',views.get_tech_stack)
+    path('tech_stack/',views.get_tech_stack),
+    path('crawling_results/',views.get_crawling_results)
 ]

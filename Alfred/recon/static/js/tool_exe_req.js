@@ -109,10 +109,55 @@ function set_tech_stack(tech_stack){
         for (let [subdomain,techs] of Object.entries(subdomain_obj)){
             content +=`<strong><span style="font-size: 1.5rem;color: rgb(25 135 84);" >${subdomain}</span></strong><br>`
             for (let [categroup,tech] of Object.entries(techs)){
-                content += `<span style="font-weight:bold"> ${categroup} => ${tech} </span><br>`
+                content += `<span style="font-weight:bold"> <span class="text-primary">${categroup}</span> => ${tech} </span><br>`
             }
             content +="<hr>"
         }
+    }
+    content += `</div>`
+    section_2 = document.getElementById("section-2")
+    section_2.innerHTML = content
+}
+
+async function request_crawling_results(){
+    let stop = start_spinner() 
+    set_info("Crawling Selected Subdomains")
+    let checkboxes = document.querySelectorAll(`input[type="checkbox"]`)
+    let req_subdomains = []
+    console.log(checkboxes, checkboxes.length)
+    for(let i=0;i<checkboxes.length;i++){
+        if(checkboxes[i].checked){
+            req_subdomains.push(checkboxes[i].value)
+        }
+    }
+    console.log(req_subdomains)
+
+    const response = await fetch(`http://${host_ip}/crawling_results/`,{
+        method: 'POST', // Specify the HTTP method
+        headers: {
+            'Content-Type': 'application/json' // Specify the content type
+        },
+        body: JSON.stringify(req_subdomains)
+    })
+
+    const fetched_data = await response.json()
+    console.log(fetched_data)
+    set_crawling_results(fetched_data['crawling_results'])
+    set_info("Crawling Success")
+    stop()
+}
+
+function set_crawling_results(crawling_results){
+    content = `<div class="mx-3" style="font-size: 20px;">`
+    for (let subdomain_obj of crawling_results){
+        for (let [subdomain,urls] of Object.entries(subdomain_obj)){
+            content +=`<strong><span style="font-size: 1.5rem;color: rgb(25 135 84);" >${subdomain}</span></strong><br>`
+            for (let url of urls){
+                content += `<span><a href="${url}">${url}</a></span><br>`
+            }
+             content +="<hr>"
+        }
+
     }
     content += `</div>`
     section_2 = document.getElementById("section-2")
