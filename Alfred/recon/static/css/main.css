@@ -160,4 +160,9 @@
     margin-left: 1%;
     background-color: white;
     color: green;
+    color: hsla(120, 88%, 41%, 0.867);
+}
+
+#tool_link{
+    text-decoration: none;
 }

@@ -1,7 +1,13 @@
 // Code: 213
 async function get_subdomains(){
+    set_description("subfinder",
+        "subfinder is a subdomain discovery tool that returns valid subdomains for websites, using passive online sources.",
+        "https://github.com/projectdiscovery/subfinder/blob/dev/README.md")
     domain = document.getElementById("domain").value
-    console.log(domain)
+    if(domain == ""){
+        alert("Kindly Enter the Domain!")
+        return
+    }
     let stop = start_spinner() 
     try{
         const url = new URL(`http://${host_ip}/getsubdomains/`)
@@ -77,8 +83,10 @@ function set_subdomain_data(subdomains, reachable){
 }
 
 async function request_tech_stack(){
-    let stop = start_spinner() 
-    set_info("Fetching TECH STACK")
+    set_description("builtwith",
+        "BuiltWith helps users identify tools like analytics platforms, content management systems, hosting providers, and more.",
+        "https://github.com/richardpenman/builtwith/blob/master/README.rst")
+    
     let checkboxes = document.querySelectorAll(`input[type="checkbox"]`)
     let req_subdomains = []
     console.log(checkboxes, checkboxes.length)
@@ -87,8 +95,12 @@ async function request_tech_stack(){
             req_subdomains.push(checkboxes[i].value)
         }
     }
-    console.log(req_subdomains)
-
+    if(req_subdomains.length == 0){
+        alert("Kindly Select Atleast one subdomain")
+        return
+    }
+    set_info("Fetching Tech Stack")
+    let stop = start_spinner() 
     const response = await fetch(`http://${host_ip}/tech_stack/`,{
         method: 'POST', // Specify the HTTP method
         headers: {
@@ -99,7 +111,7 @@ async function request_tech_stack(){
 
     const fetched_data = await response.json()
     set_tech_stack(fetched_data['tech_stack'])
-    set_info("TECH STACK FETCHED SUCCESSFULLY")
+    set_info("Tech Stack Fetched Successfully")
     stop()
 }
 
@@ -119,9 +131,11 @@ function set_tech_stack(tech_stack){
     section_2.innerHTML = content
 }
 
-async function request_crawling_results(){
-    let stop = start_spinner() 
-    set_info("Crawling Selected Subdomains")
+async function request_crawling_results(){ 
+
+    set_description("katana",
+    "Katana tool is a versatile web crawler designed for quickly scanning and retrieving information from websites.",
+    "https://github.com/projectdiscovery/katana/blob/main/README.md")
     let checkboxes = document.querySelectorAll(`input[type="checkbox"]`)
     let req_subdomains = []
     console.log(checkboxes, checkboxes.length)
@@ -131,7 +145,12 @@ async function request_crawling_results(){
         }
     }
     console.log(req_subdomains)
-
+    if(req_subdomains.length == 0){
+        alert("Kindly Select Atleast one subdomain")
+        return
+    }
+    set_info("Crawling on Selected Sub-domains...")
+    let stop = start_spinner() 
     const response = await fetch(`http://${host_ip}/crawling_results/`,{
         method: 'POST', // Specify the HTTP method
         headers: {
@@ -148,6 +167,7 @@ async function request_crawling_results(){
 }
 
 function set_crawling_results(crawling_results){
+   
     content = `<div class="mx-3" style="font-size: 20px;">`
     for (let subdomain_obj of crawling_results){
         for (let [subdomain,urls] of Object.entries(subdomain_obj)){
@@ -162,4 +182,21 @@ function set_crawling_results(crawling_results){
     content += `</div>`
     section_2 = document.getElementById("section-2")
     section_2.innerHTML = content
+}
+
+function set_description(tool_name, tool_description,github_link){
+    const section = document.getElementById("section-3");
+    let emoji = "👾"
+    if(tool_name == "katana"){
+        emoji = "⚔"
+    }else if(tool_name == "builtwith"){
+        emoji = "🏴"
+    }
+    section.innerHTML = `
+        <div>
+            <div style="color:white; font-size:16px; margin:10px 10px;"><big><span style="color:#008529; font-weight:bolder">Tool Name: </span>${tool_name}</big></div>
+            <div style="color:white; font-size:14px; margin:10px 10px;"><big><span style="font-weight:bolder">Description: </span> ${tool_description}</big></div>
+            <div style="color:white; font-size:14px; margin:10px 10px;"><big><span style="font-weight:bolder">to learn more...<a href="${github_link}" id="tool_link" target="_blank" title="${github_link}">${emoji}</a></div>
+        </div>
+    `;
 }
