@@ -29,5 +29,6 @@ urlpatterns = [
     path("sqlmap/", views.run_sqlmap, name="run_sqlmap"),
     path('getip/',views.get_resolved_ip),
     path('getsubdomains/',views.get_subdomains),
-    path('dummy/',views.dummy_page)
+    path('dummy/',views.dummy_page),
+    path('tech_stack/',views.get_tech_stack)
 ]

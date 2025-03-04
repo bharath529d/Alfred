@@ -155,3 +155,9 @@
     color: rgb(171, 31, 31);
     font-weight: bold;
 }
+
+.tech-stack-subdomain{
+    margin-left: 1%;
+    background-color: white;
+    color: green;
+}

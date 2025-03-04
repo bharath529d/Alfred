@@ -5,8 +5,9 @@ from django.http import JsonResponse
 import icmplib
 import os
 import subprocess
-from .execute_tools import store_subdomains
+from .import execute_tools
 from .models import Subdomains
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -105,14 +106,15 @@ def get_subdomains(request):
             except:
                 reachable.append(False)
     else:
-        subdomains = store_subdomains(domain)
+        subdomains = execute_tools.store_subdomains(domain)
         print(subdomains, type(subdomains))
     return JsonResponse({"subdomains":subdomains,"reachable":reachable,"message": "Subdomains Fetched Succesfully.."})
 
+@csrf_exempt
 def get_tech_stack(request):
     if request.method == "POST":
         subdomains = json.loads(request.body)
-        print(subdomains, type(subdomains))
-
-
+        tech_stack = execute_tools.tech_stack_list(subdomains)
+        print(tech_stack, type(tech_stack))
+    return JsonResponse({"tech_stack": tech_stack})
 

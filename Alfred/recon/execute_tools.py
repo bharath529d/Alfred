@@ -1,6 +1,6 @@
 import os, json, subprocess
 from .models import Subdomains
-from wappalyzer import analyze # type: ignore
+import builtwith
 def store_subdomains(domain):
     os.chdir(r'C:\Users\bhara\Downloads\RSUME\Python works\Alfred\Alfred\recon\tools')
     command = f"subfinder -d {domain}"
@@ -18,18 +18,9 @@ def store_subdomains(domain):
     return new_domain.save_subdomains(subdomains) # stores the subdomains in json format and
     # returns the json formatted string of subdomains
 
-def tech_stack_dict(subdomains):
-    tech_stack = dict()
+def tech_stack_list(subdomains):
+    tech_stack = []
     for subdomain in subdomains:
-        url = f'https://{subdomain}'
-        result = analyze(url)
-        json_dict = result[url]
-        cate = []
-        technology = []
-        version = []
-        for key, value in json_dict.items():
-            cate.append(value['categories'])
-            technology.append(key)
-            version.append(version)
-        tech_stack[subdomain] = {"category":cate,"tech":technology,"version":version}
+        result = builtwith.parse(f"https://{subdomain}")
+        tech_stack.append({subdomain:result})
     return tech_stack

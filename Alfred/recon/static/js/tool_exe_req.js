@@ -76,7 +76,43 @@ function set_subdomain_data(subdomains, reachable){
     // }
 }
 
-function request_tech_stack(){
-    checkboxes = document.getElementsByClassName("sd-cb")
-    console.log(checkboxes)
+async function request_tech_stack(){
+    let stop = start_spinner() 
+    set_info("Fetching TECH STACK")
+    let checkboxes = document.querySelectorAll(`input[type="checkbox"]`)
+    let req_subdomains = []
+    console.log(checkboxes, checkboxes.length)
+    for(let i=0;i<checkboxes.length;i++){
+        if(checkboxes[i].checked){
+            req_subdomains.push(checkboxes[i].value)
+        }
+    }
+    console.log(req_subdomains)
+
+    const response = await fetch(`http://${host_ip}/tech_stack/`,{
+        method: 'POST', // Specify the HTTP method
+        headers: {
+            'Content-Type': 'application/json' // Specify the content type
+        },
+        body: JSON.stringify(req_subdomains)
+    })
+
+    const fetched_data = await response.json()
+    set_tech_stack(fetched_data['tech_stack'])
+    set_info("TECH STACK FETCHED SUCCESSFULLY")
+    stop()
+}
+
+function set_tech_stack(tech_stack){
+    content = ``
+    for (let subdomain_obj of tech_stack){
+        for (let [subdomain,techs] of Object.entries(subdomain_obj)){
+            content +=`<br><strong><span style="font-size: 1.5rem;">----- ${subdomain}-----</span></strong><br>`
+            for (let [categroup,tech] of Object.entries(techs)){
+                content += categroup + " => " + tech + "<br>"
+            }
+            content +="<br><br><br>"
+        }
+    }
+    document.getElementById("section-2").innerHTML = content
 }
