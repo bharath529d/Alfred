@@ -160,9 +160,26 @@
     margin-left: 1%;
     background-color: white;
     color: green;
-    color: hsla(120, 88%, 41%, 0.867);
 }
 
 #tool_link{
     text-decoration: none;
+}
+
+.payload_scripts{
+    font-size: 1.2rem;
+}
+
+hr{
+    margin: 0;
+}
+
+.clipboard:hover{
+    color: black;
+    background-color: white;
+}
+
+.clipboard:active{
+    color: white;
+    background-color: rgb(25 135 84);
 }
