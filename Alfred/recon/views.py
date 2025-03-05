@@ -8,6 +8,7 @@ import subprocess
 from .import execute_tools
 from .models import Subdomains
 from django.views.decorators.csrf import csrf_exempt
+import socket
 # Create your views here.
 
 
@@ -78,7 +79,7 @@ def dummy_page(request):
 #         message = "Reachable"
 #     return render(request,'home.html',{'domain':domain,'ip': ip[0],'message':message})
 
-
+"""
 def get_resolved_ip(request):
     try:
         domain = request.GET.get('domain')
@@ -92,7 +93,38 @@ def get_resolved_ip(request):
     except Exception as e:
         print("error: ",e)
         return JsonResponse({"err_mes":"Domain doesn't exists","success":False})
-    
+"""
+
+def get_resolved_ip(request):
+    try:
+        domain = request.GET.get('domain')
+
+        # Resolve IPv4 and IPv6 using `socket.getaddrinfo()`
+        ipv4 = socket.getaddrinfo(domain, None, socket.AF_INET)[0][4][0]
+        ipv6 = socket.getaddrinfo(domain, None, socket.AF_INET6)[0][4][0]
+
+        # Use system ping command (cross-platform support)
+        def is_alive(ip):
+            try:
+                # "-c 1" for Linux/macOS, "-n 1" for Windows
+                ping_cmd = ["ping", "-c", "1", ip] if subprocess.run(["uname"], capture_output=True).returncode == 0 else ["ping", "-n", "1", ip]
+                result = subprocess.run(ping_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                return result.returncode == 0  # If return code is 0, host is alive
+            except Exception:
+                return False
+
+        # Check if the resolved IPv4 is alive
+        if not is_alive(ipv4):
+            return JsonResponse({"err_mes": "Domain isn't Alive", "success": False})
+
+        data = {"ipv4": ipv4, "ipv6": ipv6, "success": True}
+        return JsonResponse(data)
+
+    except Exception as e:
+        print("error:", e)
+        return JsonResponse({"err_mes": "Domain doesn't exist", "success": False})
+
+
 def get_subdomains(request):
     domain = request.GET.get('domain')
     result = Subdomains.objects.filter(domain_name=f"{domain}")
