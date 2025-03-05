@@ -9,6 +9,8 @@ from .import execute_tools
 from .models import Subdomains
 from django.views.decorators.csrf import csrf_exempt
 import socket
+import httpx
+
 # Create your views here.
 
 
@@ -124,7 +126,7 @@ def get_resolved_ip(request):
         print("error:", e)
         return JsonResponse({"err_mes": "Domain doesn't exist", "success": False})
 
-
+"""
 def get_subdomains(request):
     domain = request.GET.get('domain')
     result = Subdomains.objects.filter(domain_name=f"{domain}")
@@ -137,12 +139,44 @@ def get_subdomains(request):
     
     for subdomain in subdomains:
         try:
-            result = icmplib.ping(subdomain,count=2,interval=0,timeout=2)
+            result = icmplib.ping(subdomain,count=1,interval=0,timeout=2)
             reachable.append(True) if result.is_alive else reachable.append(False)
         except:
             reachable.append(False)
-            
     return JsonResponse({"subdomains":subdomains,"reachable":reachable,"message": "Subdomains Fetched Succesfully.."})
+"""
+
+
+
+
+def is_reachable(subdomain):
+    try:
+        response = httpx.get(f"http://{subdomain}", timeout=2)
+        return response.status_code < 400  # Consider it reachable if status is 200-399
+    except httpx.RequestError:
+        return False
+
+def get_subdomains(request):
+    domain = request.GET.get('domain')
+    if not domain:
+        return JsonResponse({"error": "Domain parameter is required"}, status=400)
+
+    result = Subdomains.objects.filter(domain_name=domain)
+    
+    if result.exists():
+        subdomains = json.loads(result.first().subdomains)
+    else:
+        subdomains = json.loads(execute_tools.store_subdomains(domain))
+
+    reachable = [is_reachable(subdomain) for subdomain in subdomains]
+
+    return JsonResponse({
+        "subdomains": subdomains,
+        "reachable": reachable,
+        "message": "Subdomains Fetched Successfully."
+    })
+
+
 
 @csrf_exempt
 def get_tech_stack(request):

@@ -2,7 +2,7 @@ import os, json, subprocess
 from .models import Subdomains
 import builtwith
 def store_subdomains(domain):
-    os.chdir(r'C:\Users\bhara\Downloads\RSUME\Python works\Alfred\Alfred\recon\tools')
+    os.chdir(r'/home/arfa/project/scanner/Alfred/Alfred/recon/tools')
     command = f"subfinder -d {domain}"
     result = subprocess.run(command,shell=True,capture_output=True,text=True)
     subdomains = []
@@ -26,7 +26,7 @@ def tech_stack_list(subdomains):
     return tech_stack
 
 def crawling_results(subdomains):
-    os.chdir(r'C:\Users\bhara\Downloads\RSUME\Python works\Alfred\Alfred\recon\tools')
+    os.chdir(r'/home/arfa/project/scanner/Alfred/Alfred/recon/tools')
     c_result = []
     for subdomain in subdomains:
         command = f"katana -u https://{subdomain}"
